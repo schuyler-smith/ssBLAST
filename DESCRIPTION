@@ -1,0 +1,15 @@
+Package: ssBLAST
+Title: Wrangle BLAST Files
+Description: Various functions for wrangling BLAST files and associated sequence files.
+Version: 0.1
+Author: Schuyler Smith <sdsmith@iastate.edu>
+Maintainer: Schuyler Smith <sdsmith@iastate.edu>
+Depends: R (>= 3.5)
+License: GPL-3
+Imports: 
+  Rcpp (>= 1.0.3),
+  data.table
+LinkingTo: Rcpp
+SystemRequirements: C++11
+RoxygenNote: 7.0.0
+Encoding: UTF-8
