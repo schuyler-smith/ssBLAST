@@ -9,10 +9,10 @@
 
 #include <fstream>
 #include <sstream>
-#include "filtering_stream.hpp"
-#include "gzip.hpp"
-#include "bzip2.hpp"
+#include <boost/iostreams/filtering_stream.hpp>
 // #include <boost/iostreams/copy.hpp>
+#include <boost/iostreams/filter/gzip.hpp>
+#include <boost/iostreams/filter/bzip2.hpp>
 
 void search_BLAST(std::istream& FASTQ_file, Rcpp::StringVector aligned, const char * output_path)
 {
