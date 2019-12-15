@@ -85,14 +85,13 @@ void search_BLAST_gz(gzFile& FASTQ_file, Rcpp::StringVector aligned, const char 
 
 //' @author Schuyler D. Smith
 // [[Rcpp::export]]
-Rcpp::CharacterVector unaligned_BLAST_sequences2(
+Rcpp::CharacterVector unaligned_BLAST_sequences(
 	std::string FASTQ_file_path,
 	Rcpp::StringVector aligned,
 	const char * output_path
 ){
 
 	std::string ext = FASTQ_file_path.substr(FASTQ_file_path.rfind('.'));
-	Rcpp::Rcout << ext;
 	if(strcmp(ext.c_str(), ".gz") == 0)
 	{ 
 		gzFile FASTQ_file = gzopen(FASTQ_file_path.c_str(), "rb");
@@ -104,6 +103,5 @@ Rcpp::CharacterVector unaligned_BLAST_sequences2(
 		std::ifstream FASTQ_file(FASTQ_file_path, std::ios::in);
 		search_BLAST(FASTQ_file, aligned, output_path);
 	}
-
 	return(0);
 }

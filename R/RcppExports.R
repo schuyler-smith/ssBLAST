@@ -2,7 +2,7 @@
 # Generator token: 10BE3573-1514-4C36-9D1C-5A225CD40393
 
 #' @author Schuyler D. Smith
-unaligned_BLAST_sequences2 <- function(FASTQ_file_path, aligned, output_path) {
-    .Call('_ssBLAST_unaligned_BLAST_sequences2', PACKAGE = 'ssBLAST', FASTQ_file_path, aligned, output_path)
+unaligned_BLAST_sequences <- function(FASTQ_file_path, aligned, output_path) {
+    .Call('_ssBLAST_unaligned_BLAST_sequences', PACKAGE = 'ssBLAST', FASTQ_file_path, aligned, output_path)
 }
 

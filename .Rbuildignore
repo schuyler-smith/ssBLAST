@@ -3,3 +3,10 @@
 LICENSE
 .travis.yml
 .*\.tar\.gz$
+^Meta$
+^doc$
+^docs$
+.Rprofile
+
+
+
