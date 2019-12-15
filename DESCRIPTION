@@ -10,8 +10,7 @@ Imports:
   Rcpp (>= 1.0.3),
   data.table
 LinkingTo: 
-  Rcpp,
-  BH
+  Rcpp
 SystemRequirements: C++11
 RoxygenNote: 7.0.2
 Encoding: UTF-8

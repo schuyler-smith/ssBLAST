@@ -5,22 +5,22 @@
 
 using namespace Rcpp;
 
-// unaligned_BLAST_sequences
-Rcpp::CharacterVector unaligned_BLAST_sequences(std::string FASTQ_file_path, Rcpp::StringVector aligned, const char * output_path);
-RcppExport SEXP _ssBLAST_unaligned_BLAST_sequences(SEXP FASTQ_file_pathSEXP, SEXP alignedSEXP, SEXP output_pathSEXP) {
+// unaligned_BLAST_sequences2
+Rcpp::CharacterVector unaligned_BLAST_sequences2(std::string FASTQ_file_path, Rcpp::StringVector aligned, const char * output_path);
+RcppExport SEXP _ssBLAST_unaligned_BLAST_sequences2(SEXP FASTQ_file_pathSEXP, SEXP alignedSEXP, SEXP output_pathSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< std::string >::type FASTQ_file_path(FASTQ_file_pathSEXP);
     Rcpp::traits::input_parameter< Rcpp::StringVector >::type aligned(alignedSEXP);
     Rcpp::traits::input_parameter< const char * >::type output_path(output_pathSEXP);
-    rcpp_result_gen = Rcpp::wrap(unaligned_BLAST_sequences(FASTQ_file_path, aligned, output_path));
+    rcpp_result_gen = Rcpp::wrap(unaligned_BLAST_sequences2(FASTQ_file_path, aligned, output_path));
     return rcpp_result_gen;
 END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_ssBLAST_unaligned_BLAST_sequences", (DL_FUNC) &_ssBLAST_unaligned_BLAST_sequences, 3},
+    {"_ssBLAST_unaligned_BLAST_sequences2", (DL_FUNC) &_ssBLAST_unaligned_BLAST_sequences2, 3},
     {NULL, NULL, 0}
 };
 

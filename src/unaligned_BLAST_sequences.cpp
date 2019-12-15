@@ -8,7 +8,6 @@
 #include <string>
 #include <fstream>
 #include <sstream>
-
 #include <zlib.h>
 
 void search_BLAST(std::istream& FASTQ_file, Rcpp::StringVector aligned, const char * output_path)
@@ -48,17 +47,15 @@ void search_BLAST(std::istream& FASTQ_file, Rcpp::StringVector aligned, const ch
 void search_BLAST_gz(gzFile& FASTQ_file, Rcpp::StringVector aligned, const char * output_path)
 {
 	remove(output_path);
-
-	static const unsigned BUFLEN = 1024;
-	char buffer[BUFLEN];
-	char* offset = buffer;
-
-	std::string line, seq_id;
+	std::string line;
 	int seq_line = 0, BLAST_seq = 0;
 	bool match = false;
 
 	std::fstream output_file;  
 	output_file = std::fstream(output_path, std::ios::out | std::ios_base::app);
+	static const unsigned BUFLEN = 1024;
+	char buffer[BUFLEN];
+	char* offset = buffer;
 	for(;;)
 	{
 		int len = sizeof(buffer)-(offset-buffer);
@@ -89,11 +86,12 @@ void search_BLAST_gz(gzFile& FASTQ_file, Rcpp::StringVector aligned, const char 
 
 //' @author Schuyler D. Smith
 // [[Rcpp::export]]
-Rcpp::CharacterVector unaligned_BLAST_sequences(
+Rcpp::CharacterVector unaligned_BLAST_sequences2(
 	std::string FASTQ_file_path,
 	Rcpp::StringVector aligned,
 	const char * output_path
 ){
+
 	std::string ext = FASTQ_file_path.substr(FASTQ_file_path.rfind('.'));
 	Rcpp::Rcout << ext;
 	if(strcmp(ext.c_str(), ".gz") == 0)
@@ -107,7 +105,6 @@ Rcpp::CharacterVector unaligned_BLAST_sequences(
 		std::ifstream FASTQ_file(FASTQ_file_path);
 		search_BLAST(FASTQ_file, aligned, output_path);
 	}
-	
+
 	return(0);
 }
-
