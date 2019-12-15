@@ -9,7 +9,10 @@ License: GPL-3
 Imports: 
   Rcpp (>= 1.0.3),
   data.table
-LinkingTo: Rcpp
+LinkingTo: 
+  Rcpp,
+  BH
 SystemRequirements: C++11
 RoxygenNote: 7.0.2
 Encoding: UTF-8
+NeedsCompilation: yes

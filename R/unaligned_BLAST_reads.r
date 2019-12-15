@@ -2,12 +2,12 @@
 #'
 #' Compares fastq file with corresponding BLAST file to find reads that were not found in BLAST search and writes to new file.
 
+#' @useDynLib ssBLAST
 #' @usage unaligned_BLAST(fastq_file_path, BLAST_file_path, output_path = NULL)
 #' @param fastq_file_path String that either represents a path to a single fastq file, or a directory containing multiple fastq files.
 #' @param BLAST_file_path String that either represents a path to a single blast file, or a directory containing multiple blast files that correspond to `the fastq_file_path`.
 #' @param output_path String for path that new files should be created. Default uses the `fastq_file_path`.
 #' @return fastq
-#' @useDynLib ssBLAST
 #' @importFrom data.table fread
 #' @export
 #' 
