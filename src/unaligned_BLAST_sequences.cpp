@@ -6,6 +6,7 @@
 
 #include <Rcpp.h>
 #include <string>
+#include <iostream>
 #include <fstream>
 #include <sstream>
 #include <zlib.h>
@@ -16,9 +17,8 @@ void search_BLAST(std::istream& FASTQ_file, Rcpp::StringVector aligned, const ch
 	std::string line, seq_id;
 	int lines_processed = 0, seq_line = 0, BLAST_seq = 0;
 	bool match = false;
-
-	std::fstream output_file;  
-	output_file = std::fstream(output_path, std::ios::out | std::ios_base::app);
+	 
+	std::fstream output_file(output_path, std::ios::out | std::ios_base::app);
 	std::stringstream output_line(std::ios_base::in | std::ios_base::out);
 	while(std::getline(FASTQ_file, line)) 
 	{
@@ -47,12 +47,11 @@ void search_BLAST(std::istream& FASTQ_file, Rcpp::StringVector aligned, const ch
 void search_BLAST_gz(gzFile& FASTQ_file, Rcpp::StringVector aligned, const char * output_path)
 {
 	remove(output_path);
-	std::string line;
+	std::string line, seq_id;
 	int seq_line = 0, BLAST_seq = 0;
 	bool match = false;
-
-	std::fstream output_file;  
-	output_file = std::fstream(output_path, std::ios::out | std::ios_base::app);
+ 
+	std::fstream output_file(output_path, std::ios::out | std::ios_base::app);
 	static const unsigned BUFLEN = 1024;
 	char buffer[BUFLEN];
 	char* offset = buffer;
@@ -101,8 +100,8 @@ Rcpp::CharacterVector unaligned_BLAST_sequences2(
 		gzclose(FASTQ_file);
 	} else if(strcmp(ext.c_str(), ".bz2") == 0) { // bzip2 FASTQ_file_path
 		Rcpp::Rcout << "bz file-type encription not supported.";
-	} else if(strcmp(ext.c_str(), ".fastq") == 0) { 
-		std::ifstream FASTQ_file(FASTQ_file_path);
+	} else if(strcmp(ext.c_str(), ".fastq") == 0) {
+		std::ifstream FASTQ_file(FASTQ_file_path, std::ios::in);
 		search_BLAST(FASTQ_file, aligned, output_path);
 	}
 
