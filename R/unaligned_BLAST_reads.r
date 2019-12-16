@@ -19,17 +19,15 @@ unaligned_BLAST <- function(fastq_file_path, BLAST_file_path, output_path = NULL
     fastq_file_path <- gsub('/$','',fastq_file_path)
     fastq_file <- vector()
     for(extension in c(".fastq.gz$", ".fastq.bz2$", ".fastq$")){
-      fastq_file <- append(fastq_file, dir(fastq_file_path, extension, full.names = TRUE))    
+      fastq_file <- append(fastq_file, dir(fastq_file_path, extension, full.names = TRUE))
     }
-  } else {
-    fastq_file <- normalizePath(fastq_file_path)
-  }
+  } else {fastq_file <- fastq_file_path}
+  fastq_file <- normalizePath(fastq_file)
   if(length(BLAST_file_path) == 1 && dir.exists(BLAST_file_path)){ 
     BLAST_file_path <- gsub('/$','',BLAST_file_path)
     BLAST_file <- dir(BLAST_file_path, full.names = TRUE)
-  } else {
-    BLAST_file <- normalizePath(BLAST_file_path)
-  }
+  } else {BLAST_file <- BLAST_file_path}
+  BLAST_file <- normalizePath(BLAST_file)
   if(length(fastq_file) > 1 || length(BLAST_file) > 1){
     if(length(fastq_file) != length(BLAST_file)){
       warning('Number of submitted FASTQ and BLAST files are not equal\nonly files with corresponding names will be used.')
@@ -41,6 +39,7 @@ unaligned_BLAST <- function(fastq_file_path, BLAST_file_path, output_path = NULL
     }
   }
   if(!is.null(output_path)){
+    output_path <- normalizePath(output_path)
     if(dir.exists(output_path)){
       for(file in seq_along(fastq_file)){
         unaligned_BLAST_sequences(fastq_file[file], 
@@ -53,7 +52,7 @@ unaligned_BLAST <- function(fastq_file_path, BLAST_file_path, output_path = NULL
       for(file in seq_along(fastq_file)){
         unaligned_BLAST_sequences(fastq_file[file], 
               unique(data.table::fread(BLAST_file[file])[[1]]), 
-              normalizePath(output_path))
+              output_path)
       } 
     }
   } else {
