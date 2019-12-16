@@ -15,7 +15,8 @@ void search_BLAST(std::istream& FASTQ_file, Rcpp::StringVector aligned, const ch
 {
 	remove(output_path);
 	std::string line, seq_id;
-	int lines_processed = 0, seq_line = 0, BLAST_seq = 0;
+	int lines_processed = 0, seq_line = 0, BLAST_seq = 0,
+		n_aligned = aligned.size();
 	bool match = false;
 	 
 	std::fstream output_file(output_path, std::ios::out | std::ios_base::app);
@@ -24,12 +25,15 @@ void search_BLAST(std::istream& FASTQ_file, Rcpp::StringVector aligned, const ch
 	{
 		if(seq_line == 4){ seq_line = 0; match = false; }
 		if(seq_line > 0 && match){ ++seq_line; continue; }
-		if(seq_line == 0)
+		if(BLAST_seq < n_aligned)
 		{
-			seq_id = line.substr(0, line.find(" ", 0));
-			if(strcmp(seq_id.erase(0,1).c_str(), aligned[BLAST_seq]) == 0)
+			if(seq_line == 0)
 			{
-				match = true; ++BLAST_seq; ++seq_line; continue;
+				seq_id = line.substr(0, line.find(" ", 0));
+				if(strcmp(seq_id.erase(0,1).c_str(), aligned[BLAST_seq]) == 0)
+				{
+					match = true; ++BLAST_seq; ++seq_line; continue;
+				}
 			}
 		}
 		output_line << line << "\n";
@@ -48,7 +52,8 @@ void search_BLAST_gz(gzFile& FASTQ_file, Rcpp::StringVector aligned, const char 
 {
 	remove(output_path);
 	std::string line, seq_id;
-	int seq_line = 0, BLAST_seq = 0;
+	int seq_line = 0, BLAST_seq = 0,
+		n_aligned = aligned.size();
 	bool match = false;
  
 	std::fstream output_file(output_path, std::ios::out | std::ios_base::app);
@@ -67,12 +72,15 @@ void search_BLAST_gz(gzFile& FASTQ_file, Rcpp::StringVector aligned, const char 
 			line = std::string(cur, eol);
 			if(seq_line == 4){ seq_line = 0; match = false; }
 			if(seq_line > 0 && match){ ++seq_line; continue; }
-			if(seq_line == 0)
+			if(BLAST_seq < n_aligned)
 			{
-				seq_id = line.substr(0, line.find(" ", 0));
-				if(strcmp(seq_id.erase(0,1).c_str(), aligned[BLAST_seq]) == 0)
+				if(seq_line == 0)
 				{
-					match = true; ++BLAST_seq; ++seq_line; continue;
+					seq_id = line.substr(0, line.find(" ", 0));
+					if(strcmp(seq_id.erase(0,1).c_str(), aligned[BLAST_seq]) == 0)
+					{
+						match = true; ++BLAST_seq; ++seq_line; continue;
+					}
 				}
 			}
 			output_file << line << "\n"; ++seq_line;
