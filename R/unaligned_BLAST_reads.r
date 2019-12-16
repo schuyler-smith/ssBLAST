@@ -8,6 +8,7 @@
 #' @param BLAST_file_path String that either represents a path to a single blast file, or a directory containing multiple blast files that correspond to `the fastq_file_path`.
 #' @param output_path String for path that new files should be created. Default uses the `fastq_file_path`.
 #' @return fastq
+#' @import Rcpp
 #' @importFrom data.table fread
 #' @export
 #' 
