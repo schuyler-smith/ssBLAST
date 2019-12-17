@@ -12,7 +12,7 @@
 #' @export
 #' 
 
-dereplicate_sequences <- function(fastq_file_path, output_path = NULL, fasta = FALSE){
+dereplicate_sequences <- function(fastq_file_path, output_path = NULL, fasta = FALSE, n = 0){
   
   if(length(fastq_file_path) == 1 && dir.exists(fastq_file_path)){ 
     fastq_file_path <- gsub('/$','',fastq_file_path)
@@ -38,7 +38,8 @@ dereplicate_sequences <- function(fastq_file_path, output_path = NULL, fasta = F
     for(file in seq_along(fastq_file)){
       derep_sequences(fastq_file[file], 
                       output_file[file],
-                      fasta)
+                      fasta,
+                      n)
     } 
 
 }

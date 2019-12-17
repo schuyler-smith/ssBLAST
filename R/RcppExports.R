@@ -2,8 +2,8 @@
 # Generator token: 10BE3573-1514-4C36-9D1C-5A225CD40393
 
 #' @author Schuyler D. Smith
-derep_sequences <- function(FASTQ_file_path, output_path, fasta) {
-    .Call('_ssBLAST_derep_sequences', PACKAGE = 'ssBLAST', FASTQ_file_path, output_path, fasta)
+derep_sequences <- function(FASTQ_file_path, output_path, fasta, n) {
+    .Call('_ssBLAST_derep_sequences', PACKAGE = 'ssBLAST', FASTQ_file_path, output_path, fasta, n)
 }
 
 #' @author Schuyler D. Smith

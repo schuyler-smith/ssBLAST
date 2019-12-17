@@ -6,15 +6,16 @@
 using namespace Rcpp;
 
 // derep_sequences
-int derep_sequences(std::string FASTQ_file_path, std::string output_path, bool fasta);
-RcppExport SEXP _ssBLAST_derep_sequences(SEXP FASTQ_file_pathSEXP, SEXP output_pathSEXP, SEXP fastaSEXP) {
+int derep_sequences(std::string FASTQ_file_path, std::string output_path, bool fasta, int n);
+RcppExport SEXP _ssBLAST_derep_sequences(SEXP FASTQ_file_pathSEXP, SEXP output_pathSEXP, SEXP fastaSEXP, SEXP nSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< std::string >::type FASTQ_file_path(FASTQ_file_pathSEXP);
     Rcpp::traits::input_parameter< std::string >::type output_path(output_pathSEXP);
     Rcpp::traits::input_parameter< bool >::type fasta(fastaSEXP);
-    rcpp_result_gen = Rcpp::wrap(derep_sequences(FASTQ_file_path, output_path, fasta));
+    Rcpp::traits::input_parameter< int >::type n(nSEXP);
+    rcpp_result_gen = Rcpp::wrap(derep_sequences(FASTQ_file_path, output_path, fasta, n));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -33,7 +34,7 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_ssBLAST_derep_sequences", (DL_FUNC) &_ssBLAST_derep_sequences, 3},
+    {"_ssBLAST_derep_sequences", (DL_FUNC) &_ssBLAST_derep_sequences, 4},
     {"_ssBLAST_unaligned_BLAST_sequences", (DL_FUNC) &_ssBLAST_unaligned_BLAST_sequences, 3},
     {NULL, NULL, 0}
 };
