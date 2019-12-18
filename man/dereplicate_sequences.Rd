@@ -10,6 +10,10 @@ dereplicate_sequences(fastq_file_path, output_path = NULL)
 \item{fastq_file_path}{String that either represents a path to a single fastq file, or a directory containing multiple fastq files.}
 
 \item{output_path}{String for path that new files should be created. Default uses the `fastq_file_path`.}
+
+\item{fasta}{if `TRUE` then the sequences are output in fasta format, fastq if `FALSE`.}
+
+\item{n}{number of sequences to return (most abundant). 0 (default) returns all reads.}
 }
 \value{
 fastq
