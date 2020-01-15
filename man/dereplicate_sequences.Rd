@@ -4,7 +4,7 @@
 \alias{dereplicate_sequences}
 \title{Dereplicate reads in FASTQ file.}
 \usage{
-dereplicate_sequences(fastq_file_path, output_path = NULL)
+dereplicate_sequences(fastq_file_path, output_path = NULL, fasta, n)
 }
 \arguments{
 \item{fastq_file_path}{String that either represents a path to a single fastq file, or a directory containing multiple fastq files.}

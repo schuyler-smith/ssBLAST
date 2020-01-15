@@ -4,7 +4,7 @@
 #' sequence ID from the corresponding read that owns the quality score.
 
 #' @useDynLib ssBLAST
-#' @usage dereplicate_sequences(fastq_file_path, output_path = NULL)
+#' @usage dereplicate_sequences(fastq_file_path, output_path = NULL, fasta, n)
 #' @param fastq_file_path String that either represents a path to a single fastq file, or a directory containing multiple fastq files.
 #' @param output_path String for path that new files should be created. Default uses the `fastq_file_path`.
 #' @param fasta if `TRUE` then the sequences are output in fasta format, fastq if `FALSE`.
