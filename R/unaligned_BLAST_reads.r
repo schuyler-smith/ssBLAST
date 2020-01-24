@@ -23,17 +23,26 @@ unaligned_BLAST <- function(fastq_file_path, BLAST_file_path, output_path = NULL
       fastq_file <- append(fastq_file, dir(fastq_file_path, extension, full.names = TRUE))
     }
   } else {fastq_file <- fastq_file_path}
-  fastq_file <- normalizePath(fastq_file)
+  fastq_file <- sort(normalizePath(fastq_file))
   if(length(BLAST_file_path) == 1 && dir.exists(BLAST_file_path)){ 
     BLAST_file_path <- gsub('/$','',BLAST_file_path)
     BLAST_file <- dir(BLAST_file_path, full.names = TRUE)
   } else {BLAST_file <- BLAST_file_path}
-  BLAST_file <- normalizePath(BLAST_file)
+  BLAST_file <- sort(normalizePath(BLAST_file))
   if(length(fastq_file) > 1 || length(BLAST_file) > 1){
     if(length(fastq_file) != length(BLAST_file)){
       warning('Number of submitted FASTQ and BLAST files are not equal\nonly files with corresponding names will be used.')
-      fastq_file <- fastq_file[basename(sapply(strsplit(fastq_file,'\\.'),"[[", 1)) %in% basename(sapply(strsplit(BLAST_file,'\\.'),"[[", 1))]
-      BLAST_file <- BLAST_file[basename(sapply(strsplit(BLAST_file,'\\.'),"[[", 1)) %in% basename(sapply(strsplit(fastq_file,'\\.'),"[[", 1))]
+      fastqs <- basename(sapply(strsplit(fastq_file,'\\.'),"[[", 1))
+      blasts <- basename(sapply(strsplit(BLAST_file,'\\.'),"[[", 1))
+      fastq_names <- unlist(sapply(fastqs, FUN = function(x){ grep(x, blasts) }))
+      blast_names <- unlist(sapply(blasts, FUN = function(x){ grep(x, fastqs) }))
+      if(length(fastq_names) > length(blast_names)){
+        fastq_file <- fastq_file[which(fastqs %in% names(fastq_names))]
+        BLAST_file <- BLAST_file[fastq_names]
+      } else {
+        BLAST_file <- BLAST_file[which(blasts %in% names(blast_names))]
+        fastq_file <- fastq_file[blast_names]
+      }
       if(length(fastq_file) != length(BLAST_file) || length(BLAST_file) == 0 || length(fastq_file) == 0){
         stop('All fastq files should have a corresponding BLAST file.')
       }
