@@ -14,14 +14,17 @@
 void search_BLAST(std::istream& FASTQ_file, Rcpp::StringVector aligned, const char * output_path)
 {
 	remove(output_path);
-	std::string line, seq_id;
-	int lines_processed = 0, seq_line = 0, BLAST_seq = 0,
+	std::string line, 
+				seq_id;
+	int lines_processed = 0, 
+		seq_line = 0, 
+		BLAST_seq = 0,
 		n_aligned = aligned.size();
 	bool match = false;
 	 
 	std::fstream output_file(output_path, std::ios::out | std::ios_base::app);
 	std::stringstream output_line(std::ios_base::in | std::ios_base::out);
-	while(std::getline(FASTQ_file, line)) 
+	while(std::getline(FASTQ_file, line))
 	{
 		if(seq_line == 4){ seq_line = 0; match = false; }
 		if(seq_line > 0 && match){ ++seq_line; continue; }
