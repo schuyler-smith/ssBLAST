@@ -74,7 +74,6 @@ Rcpp::StringVector parse_blast(
 			line_s >> subject >> perc_id >> length >> mismatch >> gap >> 
 			qstart >> qend >> sstart >> send >> e_value >> bitscore;
 			if(target_query.compare("") != 0){
-				// Rcpp::Rcout << query << "\n";
 				if(query.compare(target_query) != 0){ continue; }
 			}
 			if(target_subject.compare("") != 0){
