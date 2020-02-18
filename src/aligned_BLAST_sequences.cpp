@@ -28,18 +28,19 @@ void search_aligned_BLAST(std::istream& FASTQ_file, Rcpp::StringVector aligned, 
 	{
 		if(seq_line == 4){ seq_line = 0; match = false; }
 		if(seq_line > 0 && !(match)){ ++seq_line; continue; }
-		if((BLAST_seq < n_aligned) | match)
+		if(BLAST_seq < n_aligned)
 		{
 			if(seq_line == 0)
 			{
 				seq_id = line.substr(0, line.find(" ", 0));
 				if(strcmp(seq_id.erase(0,1).c_str(), aligned[BLAST_seq]) == 0)
 				{
-					match = true; ++BLAST_seq;
-				} else {continue;}
+					match = true;
+				} else {++seq_line; continue;}
 			}
 			output_line << line << "\n";
 			++lines_processed; ++seq_line;
+			if(seq_line == 4){++BLAST_seq;}
 			if(lines_processed == 1000)
 			{
 				output_file << output_line.rdbuf();
@@ -82,10 +83,12 @@ void search_aligned_BLAST_gz(gzFile& FASTQ_file, Rcpp::StringVector aligned, con
 					seq_id = line.substr(0, line.find(" ", 0));
 					if(strcmp(seq_id.erase(0,1).c_str(), aligned[BLAST_seq]) == 0)
 					{
-						match = true; ++BLAST_seq; 
-					} else {continue;}
+						match = true; 
+					} else {++seq_line; continue;}
 				}
-			output_file << line << "\n"; ++seq_line;
+				output_file << line << "\n"; 
+				++seq_line;
+				if(seq_line == 4){++BLAST_seq;}
 			}
 		}
 		offset = std::copy(cur, end, buffer);
