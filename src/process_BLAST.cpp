@@ -28,9 +28,7 @@ Rcpp::List process_BLAST(
 					e_value,
 					line,
 					line_,
-					prior_query, 
-					prior_subject,
-					prior_e_value;
+					prior_query;
 
 	int 			length,
 					mismatch,
@@ -38,20 +36,10 @@ Rcpp::List process_BLAST(
 					qstart,
 					qend,
 					sstart,
-					send,
-					count,
-					prior_length,
-					prior_mismatch,
-					prior_gap,
-					prior_qstart,
-					prior_qend,
-					prior_sstart,
-					prior_send;
+					send;
 
 	double 			perc_id,
-					bitscore,
-					prior_perc_id,
-					prior_bitscore;
+					bitscore;
 
 	Rcpp::Function directory("dir");
 	Rcpp::Function file_path("normalizePath");
@@ -85,25 +73,12 @@ Rcpp::List process_BLAST(
 	    		qstart >> qend >> sstart >> send >> e_value >> bitscore;
 	    	if(length >= min_length)
 		    {
-			    if(query != prior_query & perc_id >= min_perc_id)
+			    if((query != prior_query) & (perc_id >= min_perc_id))
 		   		{
 		    		++unique_read;
 		    		read_perc_id.push_back(perc_id);
 		    	}
 	    	}
-
-	    	prior_query = query;
-	    	prior_subject = subject;
-	    	prior_perc_id = perc_id;
-	    	prior_length = length;
-	    	prior_mismatch = mismatch;
-	    	prior_gap = gap;
-	    	prior_qstart = qstart; 
-	    	prior_qend = qend;
-	    	prior_sstart = sstart;
-	    	prior_send = send;
-	    	prior_e_value = e_value;
-	    	prior_bitscore = bitscore;
 	    }
 
 	    unique_reads[i] = unique_read; BLAST_counts[1] = unique_reads;
@@ -119,7 +94,7 @@ Rcpp::List process_BLAST(
 	}
 	BLAST_counts[0] = basename(BLAST_files);
 	Rcpp::StringVector BLAST_counts_names(2 + n_cutoffs);
-	for(int x = 0; x < n_cutoffs; ++x){BLAST_counts_names[2 + x] = std::to_string(min_perc_ids[x]);}
+	for(size_t x = 0; x < n_cutoffs; ++x){BLAST_counts_names[2 + x] = std::to_string(min_perc_ids[x]);}
 		BLAST_counts_names[0] = "Files"; BLAST_counts_names[1] = "Unique_Reads";
 	BLAST_counts.attr("names") = BLAST_counts_names;
 return(BLAST_counts);

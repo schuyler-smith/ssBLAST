@@ -36,8 +36,7 @@ Rcpp::StringVector parse_blast(
 					qstart,
 					qend,
 					sstart,
-					send,
-					count;
+					send;
 
 	double 			perc_id,
 					bitscore;

@@ -52,18 +52,15 @@ Rcpp::DataFrame BLAST_db_match(
 					db_ID,
 					not_db_ID;;
 
-	int 		length,
-					mismatch,
-					gap,
-					qstart,
-					qend,
-					sstart,
-					send,
-					count;
+	int 	length,
+			mismatch,
+			gap,
+			qstart,
+			qend,
+			sstart,
+			send;
 	double 	perc_id,
-					bitscore,
-					prior_perc_id,
-					prior_bitscore;
+			bitscore;
 	std::unordered_map<std::string, double> dbs;
 	
 	Rcpp::Function directory("dir");

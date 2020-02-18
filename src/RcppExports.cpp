@@ -19,6 +19,19 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// aligned_BLAST_sequences
+Rcpp::CharacterVector aligned_BLAST_sequences(std::string FASTQ_file_path, Rcpp::StringVector aligned, const char * output_path);
+RcppExport SEXP _ssBLAST_aligned_BLAST_sequences(SEXP FASTQ_file_pathSEXP, SEXP alignedSEXP, SEXP output_pathSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< std::string >::type FASTQ_file_path(FASTQ_file_pathSEXP);
+    Rcpp::traits::input_parameter< Rcpp::StringVector >::type aligned(alignedSEXP);
+    Rcpp::traits::input_parameter< const char * >::type output_path(output_pathSEXP);
+    rcpp_result_gen = Rcpp::wrap(aligned_BLAST_sequences(FASTQ_file_path, aligned, output_path));
+    return rcpp_result_gen;
+END_RCPP
+}
 // derep_sequences
 int derep_sequences(std::string FASTQ_file_path, std::string output_path, bool fasta, int n);
 RcppExport SEXP _ssBLAST_derep_sequences(SEXP FASTQ_file_pathSEXP, SEXP output_pathSEXP, SEXP fastaSEXP, SEXP nSEXP) {
@@ -104,6 +117,7 @@ END_RCPP
 
 static const R_CallMethodDef CallEntries[] = {
     {"_ssBLAST_BLAST_db_match", (DL_FUNC) &_ssBLAST_BLAST_db_match, 4},
+    {"_ssBLAST_aligned_BLAST_sequences", (DL_FUNC) &_ssBLAST_aligned_BLAST_sequences, 3},
     {"_ssBLAST_derep_sequences", (DL_FUNC) &_ssBLAST_derep_sequences, 4},
     {"_ssBLAST_fasta_merge", (DL_FUNC) &_ssBLAST_fasta_merge, 2},
     {"_ssBLAST_fasta_seq_names", (DL_FUNC) &_ssBLAST_fasta_seq_names, 1},

@@ -7,6 +7,11 @@ BLAST_db_match <- function(BLAST_file_path, db_file_path, min_length = 100L, min
 }
 
 #' @author Schuyler D. Smith
+aligned_BLAST_sequences <- function(FASTQ_file_path, aligned, output_path) {
+    .Call('_ssBLAST_aligned_BLAST_sequences', PACKAGE = 'ssBLAST', FASTQ_file_path, aligned, output_path)
+}
+
+#' @author Schuyler D. Smith
 derep_sequences <- function(FASTQ_file_path, output_path, fasta, n) {
     .Call('_ssBLAST_derep_sequences', PACKAGE = 'ssBLAST', FASTQ_file_path, output_path, fasta, n)
 }

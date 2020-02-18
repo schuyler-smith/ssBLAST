@@ -54,7 +54,7 @@ void process_seqs(std::istream& FASTQ_file, const char * output_path, bool fasta
 
 	std::fstream output_file(output_path, std::ios::out | std::ios_base::app);
 	if(n == 0){ n = sorted_seq_counts.size(); }
-	for (size_t i = 0; i < n; ++i)
+	for (int i = 0; i < n; ++i)
 	{
 		if(fasta){
 			output_file << ">" << seq_ids[sorted_seq_counts[i].first].erase(0,1) << "\t" << sorted_seq_counts[i].second << "\n";
@@ -120,7 +120,7 @@ void process_seqs_gz(gzFile& FASTQ_file, const char * output_path, bool fasta, i
 
 	std::fstream output_file(output_path, std::ios::out | std::ios_base::app);
 	if(n == 0){ n = sorted_seq_counts.size(); }
-	for (size_t i = 0; i < n; ++i)
+	for (int i = 0; i < n; ++i)
 	{
 		if(fasta){
 			output_file << ">" << seq_ids[sorted_seq_counts[i].first].erase(0,1) << "\t" << sorted_seq_counts[i].second << "\n";
