@@ -110,7 +110,7 @@ Rcpp::CharacterVector unaligned_BLAST_sequences(
 		gzclose(FASTQ_file);
 	} else if(strcmp(ext.c_str(), ".bz2") == 0) { // bzip2 FASTQ_file_path
 		Rcpp::Rcout << "bz file-type encription not supported.";
-	} else if(strcmp(ext.c_str(), ".fastq") == 0) {
+	} else if(strcmp(ext.c_str(), ".fastq") == 0 | strcmp(ext.c_str(), ".fq") == 0) {
 		std::ifstream FASTQ_file(FASTQ_file_path, std::ios::in);
 		search_BLAST(FASTQ_file, aligned, output_path);
 	}

@@ -13,13 +13,12 @@
 #' @export
 #' 
 
-# Sys.setenv("PKG_LIBS"="-lboost_iostreams")
 aligned_BLAST <- function(fastq_file_path, BLAST_file_path, output_path = NULL){
   
   if(length(fastq_file_path) == 1 && dir.exists(fastq_file_path)){ 
     fastq_file_path <- gsub('/$','',fastq_file_path)
     fastq_file <- vector()
-    for(extension in c(".fastq.gz$", ".fastq.bz2$", ".fastq$")){
+    for(extension in c(".fastq.gz$", ".fastq.bz2$", ".fastq$", ".fq$")){
       fastq_file <- append(fastq_file, dir(fastq_file_path, extension, full.names = TRUE))
     }
   } else {fastq_file <- fastq_file_path}
@@ -62,7 +61,7 @@ aligned_BLAST <- function(fastq_file_path, BLAST_file_path, output_path = NULL){
       for(file in seq_along(fastq_file)){
         aligned_BLAST_sequences(fastq_file[file], 
                                   unique(data.table::fread(BLAST_file[file])[[1]]), 
-                                  output_path)
+                                  output_path[file])
       } 
     }
   } else {
