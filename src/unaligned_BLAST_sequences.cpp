@@ -11,7 +11,7 @@
 #include <sstream>
 #include <zlib.h>
 
-void search_BLAST(std::istream& FASTQ_file, Rcpp::StringVector aligned, const char * output_path)
+void search_BLAST(std::istream& FASTQ_file, std::unordered_map<std::string, int> aligned, const char * output_path)
 {
 	remove(output_path);
 	std::string line, 
@@ -33,7 +33,7 @@ void search_BLAST(std::istream& FASTQ_file, Rcpp::StringVector aligned, const ch
 			if(seq_line == 0)
 			{
 				seq_id = line.substr(0, line.find(" ", 0));
-				if(strcmp(seq_id.erase(0,1).c_str(), aligned[BLAST_seq]) == 0)
+				if(aligned.count(seq_id))
 				{
 					match = true; ++BLAST_seq; ++seq_line; continue;
 				}
@@ -51,7 +51,7 @@ void search_BLAST(std::istream& FASTQ_file, Rcpp::StringVector aligned, const ch
 	output_file.close();
 }
 
-void search_BLAST_gz(gzFile& FASTQ_file, Rcpp::StringVector aligned, const char * output_path)
+void search_BLAST_gz(gzFile& FASTQ_file, std::unordered_map<std::string, int> aligned, const char * output_path)
 {
 	remove(output_path);
 	std::string line, seq_id;
@@ -80,7 +80,7 @@ void search_BLAST_gz(gzFile& FASTQ_file, Rcpp::StringVector aligned, const char 
 				if(seq_line == 0)
 				{
 					seq_id = line.substr(0, line.find(" ", 0));
-					if(strcmp(seq_id.erase(0,1).c_str(), aligned[BLAST_seq]) == 0)
+					if(aligned.count(seq_id))
 					{
 						match = true; ++BLAST_seq; ++seq_line; continue;
 					}
@@ -101,18 +101,23 @@ Rcpp::CharacterVector unaligned_BLAST_sequences(
 	Rcpp::StringVector aligned,
 	const char * output_path
 ){
-
+	std::unordered_map<std::string, int> aligned_map;
+	int num_aligned = aligned.length();
+	for(size_t i=0; i < num_aligned; ++i)
+    {
+    	aligned_map[Rcpp::as<std::string>(aligned(i))] = 0;
+    }
 	std::string ext = FASTQ_file_path.substr(FASTQ_file_path.rfind('.'));
 	if(strcmp(ext.c_str(), ".gz") == 0)
 	{ 
 		gzFile FASTQ_file = gzopen(FASTQ_file_path.c_str(), "rb");
-		search_BLAST_gz(FASTQ_file, aligned, output_path);
+		search_BLAST_gz(FASTQ_file, aligned_map, output_path);
 		gzclose(FASTQ_file);
 	} else if(strcmp(ext.c_str(), ".bz2") == 0) { // bzip2 FASTQ_file_path
 		Rcpp::Rcout << "bz file-type encription not supported.";
 	} else if(strcmp(ext.c_str(), ".fastq") == 0 | strcmp(ext.c_str(), ".fq") == 0) {
 		std::ifstream FASTQ_file(FASTQ_file_path, std::ios::in);
-		search_BLAST(FASTQ_file, aligned, output_path);
+		search_BLAST(FASTQ_file, aligned_map, output_path);
 	}
 	return(0);
 }
