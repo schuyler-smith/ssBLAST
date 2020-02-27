@@ -27,7 +27,6 @@ void search_BLAST(std::istream& FASTQ_file, std::unordered_map<std::string, int>
 		if(seq_line == 0)
 		{
 			seq_id = line.substr(0, line.find(" ", 0)).erase(0,1);;
-			Rcpp::Rcout << seq_id << '\n';
 			if(aligned.count(seq_id))
 			{
 				match = true; ++seq_line; continue;

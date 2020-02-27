@@ -63,6 +63,7 @@ Rcpp::StringVector parse_blast(
 	{
 		output_path = BLAST_files[i];
 		output_path = output_path + ".filtered";
+		remove(output_path);
 		std::fstream output_file(output_path, std::ios::out | std::ios_base::app);
 		std::stringstream output_line(std::ios_base::in | std::ios_base::out);
 		std::ifstream 	BLAST_file(BLAST_files[i]);
