@@ -14,12 +14,8 @@
 void search_BLAST(std::istream& FASTQ_file, std::unordered_map<std::string, int> aligned, const char * output_path)
 {
 	remove(output_path);
-	std::string line, 
-				seq_id;
-	int lines_processed = 0, 
-		seq_line = 0, 
-		BLAST_seq = 0,
-		n_aligned = aligned.size();
+	std::string line, seq_id;
+	int lines_processed = 0, seq_line = 0;
 	bool match = false;
 	 
 	std::fstream output_file(output_path, std::ios::out | std::ios_base::app);
@@ -28,15 +24,13 @@ void search_BLAST(std::istream& FASTQ_file, std::unordered_map<std::string, int>
 	{
 		if(seq_line == 4){ seq_line = 0; match = false; }
 		if(seq_line > 0 && match){ ++seq_line; continue; }
-		if(BLAST_seq < n_aligned)
+		if(seq_line == 0)
 		{
-			if(seq_line == 0)
+			seq_id = line.substr(0, line.find(" ", 0)).erase(0,1);;
+			Rcpp::Rcout << seq_id << '\n';
+			if(aligned.count(seq_id))
 			{
-				seq_id = line.substr(0, line.find(" ", 0));
-				if(aligned.count(seq_id))
-				{
-					match = true; ++BLAST_seq; ++seq_line; continue;
-				}
+				match = true; ++seq_line; continue;
 			}
 		}
 		output_line << line << "\n";
@@ -55,8 +49,7 @@ void search_BLAST_gz(gzFile& FASTQ_file, std::unordered_map<std::string, int> al
 {
 	remove(output_path);
 	std::string line, seq_id;
-	int seq_line = 0, BLAST_seq = 0,
-		n_aligned = aligned.size();
+	int seq_line = 0;
 	bool match = false;
  
 	std::fstream output_file(output_path, std::ios::out | std::ios_base::app);
@@ -75,15 +68,12 @@ void search_BLAST_gz(gzFile& FASTQ_file, std::unordered_map<std::string, int> al
 			line = std::string(cur, eol);
 			if(seq_line == 4){ seq_line = 0; match = false; }
 			if(seq_line > 0 && match){ ++seq_line; continue; }
-			if(BLAST_seq < n_aligned)
+			if(seq_line == 0)
 			{
-				if(seq_line == 0)
+				seq_id = line.substr(0, line.find(" ", 0)).erase(0,1);;
+				if(aligned.count(seq_id))
 				{
-					seq_id = line.substr(0, line.find(" ", 0));
-					if(aligned.count(seq_id))
-					{
-						match = true; ++BLAST_seq; ++seq_line; continue;
-					}
+					match = true; ++seq_line; continue;
 				}
 			}
 			output_file << line << "\n"; ++seq_line;
@@ -103,7 +93,7 @@ Rcpp::CharacterVector unaligned_BLAST_sequences(
 ){
 	std::unordered_map<std::string, int> aligned_map;
 	int num_aligned = aligned.length();
-	for(size_t i=0; i < num_aligned; ++i)
+	for(int i=0; i < num_aligned; ++i)
     {
     	aligned_map[Rcpp::as<std::string>(aligned(i))] = 0;
     }
@@ -115,7 +105,7 @@ Rcpp::CharacterVector unaligned_BLAST_sequences(
 		gzclose(FASTQ_file);
 	} else if(strcmp(ext.c_str(), ".bz2") == 0) { // bzip2 FASTQ_file_path
 		Rcpp::Rcout << "bz file-type encription not supported.";
-	} else if(strcmp(ext.c_str(), ".fastq") == 0 | strcmp(ext.c_str(), ".fq") == 0) {
+	} else if((strcmp(ext.c_str(), ".fastq") == 0) | (strcmp(ext.c_str(), ".fq") == 0)) {
 		std::ifstream FASTQ_file(FASTQ_file_path, std::ios::in);
 		search_BLAST(FASTQ_file, aligned_map, output_path);
 	}
