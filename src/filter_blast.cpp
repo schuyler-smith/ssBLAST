@@ -16,7 +16,7 @@
 //' @author Schuyler D. Smith
 // [[Rcpp::export]]
 
-Rcpp::StringVector parse_blast(
+Rcpp::StringVector filter_blast(
 	const std::string& BLAST_file_path,
 	const std::string& target_query = "",
 	const std::string& target_subject = "",

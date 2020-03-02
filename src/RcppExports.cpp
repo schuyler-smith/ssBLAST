@@ -69,9 +69,9 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// parse_blast
-Rcpp::StringVector parse_blast(const std::string& BLAST_file_path, const std::string& target_query, const std::string& target_subject, double perc_id_cutoff, int min_length, int max_qstart, int min_qend, int max_sstart, int min_send);
-RcppExport SEXP _ssBLAST_parse_blast(SEXP BLAST_file_pathSEXP, SEXP target_querySEXP, SEXP target_subjectSEXP, SEXP perc_id_cutoffSEXP, SEXP min_lengthSEXP, SEXP max_qstartSEXP, SEXP min_qendSEXP, SEXP max_sstartSEXP, SEXP min_sendSEXP) {
+// filter_blast
+Rcpp::StringVector filter_blast(const std::string& BLAST_file_path, const std::string& target_query, const std::string& target_subject, double perc_id_cutoff, int min_length, int max_qstart, int min_qend, int max_sstart, int min_send);
+RcppExport SEXP _ssBLAST_filter_blast(SEXP BLAST_file_pathSEXP, SEXP target_querySEXP, SEXP target_subjectSEXP, SEXP perc_id_cutoffSEXP, SEXP min_lengthSEXP, SEXP max_qstartSEXP, SEXP min_qendSEXP, SEXP max_sstartSEXP, SEXP min_sendSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -84,7 +84,7 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< int >::type min_qend(min_qendSEXP);
     Rcpp::traits::input_parameter< int >::type max_sstart(max_sstartSEXP);
     Rcpp::traits::input_parameter< int >::type min_send(min_sendSEXP);
-    rcpp_result_gen = Rcpp::wrap(parse_blast(BLAST_file_path, target_query, target_subject, perc_id_cutoff, min_length, max_qstart, min_qend, max_sstart, min_send));
+    rcpp_result_gen = Rcpp::wrap(filter_blast(BLAST_file_path, target_query, target_subject, perc_id_cutoff, min_length, max_qstart, min_qend, max_sstart, min_send));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -121,7 +121,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_ssBLAST_derep_sequences", (DL_FUNC) &_ssBLAST_derep_sequences, 4},
     {"_ssBLAST_fasta_merge", (DL_FUNC) &_ssBLAST_fasta_merge, 2},
     {"_ssBLAST_fasta_seq_names", (DL_FUNC) &_ssBLAST_fasta_seq_names, 1},
-    {"_ssBLAST_parse_blast", (DL_FUNC) &_ssBLAST_parse_blast, 9},
+    {"_ssBLAST_filter_blast", (DL_FUNC) &_ssBLAST_filter_blast, 9},
     {"_ssBLAST_process_BLAST", (DL_FUNC) &_ssBLAST_process_BLAST, 3},
     {"_ssBLAST_unaligned_BLAST_sequences", (DL_FUNC) &_ssBLAST_unaligned_BLAST_sequences, 3},
     {NULL, NULL, 0}
