@@ -69,6 +69,17 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// fasta_seq_reads
+Rcpp::List fasta_seq_reads(Rcpp::StringVector fasta_file_path);
+RcppExport SEXP _ssBLAST_fasta_seq_reads(SEXP fasta_file_pathSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::StringVector >::type fasta_file_path(fasta_file_pathSEXP);
+    rcpp_result_gen = Rcpp::wrap(fasta_seq_reads(fasta_file_path));
+    return rcpp_result_gen;
+END_RCPP
+}
 // filter_blast
 Rcpp::StringVector filter_blast(const std::string& BLAST_file_path, const std::string& target_query, const std::string& target_subject, double perc_id_cutoff, int min_length, int max_qstart, int min_qend, int max_sstart, int min_send);
 RcppExport SEXP _ssBLAST_filter_blast(SEXP BLAST_file_pathSEXP, SEXP target_querySEXP, SEXP target_subjectSEXP, SEXP perc_id_cutoffSEXP, SEXP min_lengthSEXP, SEXP max_qstartSEXP, SEXP min_qendSEXP, SEXP max_sstartSEXP, SEXP min_sendSEXP) {
@@ -121,6 +132,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_ssBLAST_derep_sequences", (DL_FUNC) &_ssBLAST_derep_sequences, 4},
     {"_ssBLAST_fasta_merge", (DL_FUNC) &_ssBLAST_fasta_merge, 2},
     {"_ssBLAST_fasta_seq_names", (DL_FUNC) &_ssBLAST_fasta_seq_names, 1},
+    {"_ssBLAST_fasta_seq_reads", (DL_FUNC) &_ssBLAST_fasta_seq_reads, 1},
     {"_ssBLAST_filter_blast", (DL_FUNC) &_ssBLAST_filter_blast, 9},
     {"_ssBLAST_process_BLAST", (DL_FUNC) &_ssBLAST_process_BLAST, 3},
     {"_ssBLAST_unaligned_BLAST_sequences", (DL_FUNC) &_ssBLAST_unaligned_BLAST_sequences, 3},

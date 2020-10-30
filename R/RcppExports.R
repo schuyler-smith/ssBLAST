@@ -27,6 +27,11 @@ fasta_seq_names <- function(fasta_file_path) {
 }
 
 #' @author Schuyler D. Smith
+fasta_seq_reads <- function(fasta_file_path) {
+    .Call('_ssBLAST_fasta_seq_reads', PACKAGE = 'ssBLAST', fasta_file_path)
+}
+
+#' @author Schuyler D. Smith
 filter_blast <- function(BLAST_file_path, target_query = "", target_subject = "", perc_id_cutoff = 90, min_length = 100L, max_qstart = -1L, min_qend = -1L, max_sstart = -1L, min_send = -1L) {
     .Call('_ssBLAST_filter_blast', PACKAGE = 'ssBLAST', BLAST_file_path, target_query, target_subject, perc_id_cutoff, min_length, max_qstart, min_qend, max_sstart, min_send)
 }
