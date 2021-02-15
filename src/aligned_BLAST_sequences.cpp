@@ -68,19 +68,16 @@ void search_aligned_BLAST_gz(gzFile& FASTQ_file, std::unordered_map<std::string,
 			line = std::string(cur, eol);
 			if(seq_line == 4){ seq_line = 0; match = false; }
 			if(seq_line > 0 && !(match)){ ++seq_line; continue; }
-			if(match)
+			if(seq_line == 0)
 			{
-				if(seq_line == 0)
-				{
-					seq_id = line.substr(0, line.find(" ", 0)).erase(0,1);
-					if(aligned.count(seq_id))
-	  				{
-	  					match = true;
-	  				} else { ++seq_line; continue; }
-				}
-				output_file << line << "\n"; 
-				++seq_line;
+				seq_id = line.substr(0, line.find(" ", 0)).erase(0,1);
+				if(aligned.count(seq_id))
+  				{
+  					match = true;
+  				} else { ++seq_line; continue; }
 			}
+			output_file << line << "\n"; 
+			++seq_line;
 		}
 		offset = std::copy(cur, end, buffer);
 	}
