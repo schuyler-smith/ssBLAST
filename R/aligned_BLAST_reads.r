@@ -51,26 +51,38 @@ aligned_BLAST <- function(fastq_file_path, BLAST_file_path, output_path = NULL){
     output_path <- normalizePath(output_path)
     if(dir.exists(output_path)){
       for(file in seq_along(fastq_file)){
-        aligned_BLAST_sequences(fastq_file[file], 
-                                  unique(data.table::fread(BLAST_file[file])[[1]]), 
-                                  file.path(gsub('/$','',normalizePath(output_path)), paste("aligned_", 
-                                                                                            basename(sapply(strsplit(fastq_file[file],'\\.'),"[[", 1)), 
-                                                                                            ".fastq", sep = '')))
+        if(file.info(BLAST_file[file])$size > 1){
+          aligned_BLAST_sequences(fastq_file[file], 
+                                    unique(data.table::fread(BLAST_file[file])[[1]]), 
+                                    file.path(gsub('/$','',normalizePath(output_path)), 
+                                              paste("aligned_",
+                                                    basename(sapply(strsplit(BLAST_file[file],'\\.'),"[[", 1)),
+                                                    "_",
+                                                    basename(sapply(strsplit(fastq_file[file],'\\.'),"[[", 1)), 
+                                                    ".fastq", sep = '')))
+        }
       } 
     } else {
       for(file in seq_along(fastq_file)){
-        aligned_BLAST_sequences(fastq_file[file], 
-                                  unique(data.table::fread(BLAST_file[file])[[1]]), 
-                                  output_path[file])
+        if(file.info(BLAST_file[file])$size > 1){
+          aligned_BLAST_sequences(fastq_file[file], 
+                                    unique(data.table::fread(BLAST_file[file])[[1]]), 
+                                    output_path[file])
+        }
       } 
     }
   } else {
     for(file in seq_along(fastq_file)){
+      if(file.info(BLAST_file[file])$size > 1){
       aligned_BLAST_sequences(fastq_file[file], 
                                 unique(data.table::fread(BLAST_file[file])[[1]]), 
-                                file.path(dirname(fastq_file[file]), paste("aligned_", 
-                                                                           basename(sapply(strsplit(fastq_file[file],'\\.'),"[[", 1)), 
-                                                                           ".fastq", sep = '')))
+                                file.path(dirname(fastq_file[file]), 
+                                          paste("aligned_",
+                                                basename(sapply(strsplit(BLAST_file[file],'\\.'),"[[", 1)),
+                                                "_",
+                                                basename(sapply(strsplit(fastq_file[file],'\\.'),"[[", 1)), 
+                                                ".fastq", sep = '')))
+      }
     } 
   }
 }
