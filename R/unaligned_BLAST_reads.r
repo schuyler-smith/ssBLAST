@@ -53,35 +53,38 @@ unaligned_BLAST <- function(fastq_file_path, BLAST_file_path, output_path = NULL
     if(dir.exists(output_path)){
       for(file in seq_along(fastq_file)){
         if(file.info(BLAST_file[file])$size > 1){
-          unaligned_BLAST_sequences(fastq_file[file], 
+          aligned_BLAST_sequences(fastq_file[file], 
                                     unique(data.table::fread(BLAST_file[file])[[1]]), 
                                     file.path(gsub('/$','',normalizePath(output_path)), 
                                               paste("unaligned_",
                                                     basename(sapply(strsplit(BLAST_file[file],'\\.'),"[[", 1)),
                                                     "_",
                                                     basename(sapply(strsplit(fastq_file[file],'\\.'),"[[", 1)), 
-                                                    ".fastq", sep = '')))
+                                                    ".fastq", sep = '')),
+                                    FALSE)
         }
       } 
     } else {
       for(file in seq_along(fastq_file)){
         if(file.info(BLAST_file[file])$size > 1){
-          unaligned_BLAST_sequences(fastq_file[file], 
+          aligned_BLAST_sequences(fastq_file[file], 
                 unique(data.table::fread(BLAST_file[file])[[1]]), 
-                output_path)
+                output_path,
+                FALSE)
         }
       } 
     }
   } else {
     for(file in seq_along(fastq_file)){
       if(file.info(BLAST_file[file])$size > 1){
-        unaligned_BLAST_sequences(fastq_file[file], 
+        aligned_BLAST_sequences(fastq_file[file], 
           unique(data.table::fread(BLAST_file[file])[[1]]), 
           file.path(dirname(fastq_file[file]), paste("unaligned_",
                                                      basename(sapply(strsplit(BLAST_file[file],'\\.'),"[[", 1)),
                                                      "_",
                                                      basename(sapply(strsplit(fastq_file[file],'\\.'),"[[", 1)), 
-                                                     ".fastq", sep = '')))
+                                                     ".fastq", sep = '')),
+          FALSE)
       }
     } 
   }

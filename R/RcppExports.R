@@ -2,47 +2,7 @@
 # Generator token: 10BE3573-1514-4C36-9D1C-5A225CD40393
 
 #' @author Schuyler D. Smith
-BLAST_db_match <- function(BLAST_file_path, db_file_path, min_length = 100L, min_id = 98L) {
-    .Call('_ssBLAST_BLAST_db_match', PACKAGE = 'ssBLAST', BLAST_file_path, db_file_path, min_length, min_id)
-}
-
-#' @author Schuyler D. Smith
-aligned_BLAST_sequences <- function(FASTQ_file_path, aligned, output_path) {
-    .Call('_ssBLAST_aligned_BLAST_sequences', PACKAGE = 'ssBLAST', FASTQ_file_path, aligned, output_path)
-}
-
-#' @author Schuyler D. Smith
-derep_sequences <- function(FASTQ_file_path, output_path, fasta, n) {
-    .Call('_ssBLAST_derep_sequences', PACKAGE = 'ssBLAST', FASTQ_file_path, output_path, fasta, n)
-}
-
-#' @author Schuyler D. Smith
-fasta_merge <- function(fasta_file_path, output_file) {
-    .Call('_ssBLAST_fasta_merge', PACKAGE = 'ssBLAST', fasta_file_path, output_file)
-}
-
-#' @author Schuyler D. Smith
-fasta_seq_names <- function(fasta_file_path) {
-    .Call('_ssBLAST_fasta_seq_names', PACKAGE = 'ssBLAST', fasta_file_path)
-}
-
-#' @author Schuyler D. Smith
-fasta_seq_reads <- function(fasta_file_path) {
-    .Call('_ssBLAST_fasta_seq_reads', PACKAGE = 'ssBLAST', fasta_file_path)
-}
-
-#' @author Schuyler D. Smith
-filter_blast <- function(BLAST_file_path, target_query = "", target_subject = "", perc_id_cutoff = 90, min_length = 100L, max_qstart = -1L, min_qend = -1L, max_sstart = -1L, min_send = -1L) {
-    .Call('_ssBLAST_filter_blast', PACKAGE = 'ssBLAST', BLAST_file_path, target_query, target_subject, perc_id_cutoff, min_length, max_qstart, min_qend, max_sstart, min_send)
-}
-
-#' @author Schuyler D. Smith
-process_BLAST <- function(BLAST_file_path, min_length = 100L, min_perc_ids = as.integer( c(100, 99, 98, 97, 96, 95, 94, 93, 92, 91, 90))) {
-    .Call('_ssBLAST_process_BLAST', PACKAGE = 'ssBLAST', BLAST_file_path, min_length, min_perc_ids)
-}
-
-#' @author Schuyler D. Smith
-unaligned_BLAST_sequences <- function(FASTQ_file_path, aligned, output_path) {
-    .Call('_ssBLAST_unaligned_BLAST_sequences', PACKAGE = 'ssBLAST', FASTQ_file_path, aligned, output_path)
+aligned_BLAST_sequences <- function(FASTQ_file_path, aligned_reads, output_path, aligned = FALSE) {
+    .Call('_ssBLAST_aligned_BLAST_sequences', PACKAGE = 'ssBLAST', FASTQ_file_path, aligned_reads, output_path, aligned)
 }
 

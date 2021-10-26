@@ -59,7 +59,8 @@ aligned_BLAST <- function(fastq_file_path, BLAST_file_path, output_path = NULL){
                                                     basename(sapply(strsplit(BLAST_file[file],'\\.'),"[[", 1)),
                                                     "_",
                                                     basename(sapply(strsplit(fastq_file[file],'\\.'),"[[", 1)), 
-                                                    ".fastq", sep = '')))
+                                                    ".fastq", sep = '')),
+                                    TRUE)
         }
       } 
     } else {
@@ -67,7 +68,8 @@ aligned_BLAST <- function(fastq_file_path, BLAST_file_path, output_path = NULL){
         if(file.info(BLAST_file[file])$size > 1){
           aligned_BLAST_sequences(fastq_file[file], 
                                     unique(data.table::fread(BLAST_file[file])[[1]]), 
-                                    output_path[file])
+                                    output_path[file],
+                                    TRUE)
         }
       } 
     }
@@ -81,7 +83,8 @@ aligned_BLAST <- function(fastq_file_path, BLAST_file_path, output_path = NULL){
                                                 basename(sapply(strsplit(BLAST_file[file],'\\.'),"[[", 1)),
                                                 "_",
                                                 basename(sapply(strsplit(fastq_file[file],'\\.'),"[[", 1)), 
-                                                ".fastq", sep = '')))
+                                                ".fastq", sep = '')),
+                                TRUE)
       }
     } 
   }
