@@ -23,7 +23,7 @@ Rcpp::CharacterVector aligned_BLAST_sequences(
 ){
     std::unordered_map<std::string, int> aligned_map;
     std::size_t num_aligned = aligned_reads.length();
-    for(int i=0; i < num_aligned; ++i){
+    for(size_t i=0; i < num_aligned; ++i){
         aligned_map[Rcpp::as<std::string>(aligned_reads(i))] = 0;
     }
     
